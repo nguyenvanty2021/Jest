@@ -1,8 +1,14 @@
 import "./App.css";
 import { useState } from "react";
+import { Popover } from "antd";
 export function replaceCamelWithSpaces(colorName) {
   return colorName.replace(/\B([A-Z])\B/g, " $1");
 }
+const content = (
+  <div>
+    <div>no ice cream will actually be delivered</div>
+  </div>
+);
 function App() {
   const [backgroundBtn, setBackgroundBtn] = useState("red");
   const [disableBtn, setDisableBtn] = useState(false);
@@ -23,8 +29,10 @@ function App() {
       setBackgroundBtn("blue");
     }
   };
+
   return (
     <div className="App">
+      {/* <div>Test1</div> */}
       <a
         className="App-link"
         href="https://reactjs.org"
@@ -33,6 +41,10 @@ function App() {
       >
         Learn React
       </a>
+      <Popover content={content}>
+        {" "}
+        <div>terms and condition</div>
+      </Popover>
       <button
         disabled={disableBtn}
         onClick={handleChangeColor}
@@ -46,8 +58,7 @@ function App() {
         onChange={(e) => handleCheckbox(e)}
         type="checkbox"
       />
-        <label htmlFor="disable-button-checkbox">{`Disable button "Change to blue"`}</label>
- 
+      <label htmlFor="disable-button-checkbox">{`Disable button "Change to blue"`}</label>
     </div>
   );
 }

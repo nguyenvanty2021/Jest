@@ -1,16 +1,40 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import App, { replaceCamelWithSpaces } from "./App";
 
-test("renders learn react link", () => {
+test("renders learn react link", async () => {
   render(<App />);
   // trong component App có tồn tại text "learn react" hay không
-  // const linkElement = screen.getByText("Learn React");
+  // const linkElementText = screen.getByText("Test1");
+  // toBeInTheDocument là tồn tại
+  // expect(linkElementText).toBeInTheDocument();
+  // cách khác vs 2 dòng ở trên
+  const valuelinkElementText = screen.queryByText(/Test1/i);
+  // toBenull là không tồn tại
+  expect(valuelinkElementText).toBeNull();
+  // hoặc
+  // not.toBeInTheDocument() là không tồn tại
+  //expect(valuelinkElementText).not.toBeInTheDocument();
+
   // kiểm tra các thẻ link (a) có text nào tên là "learn react" hay không
   const linkElement = screen.getByRole("link", { name: /learn react/i });
   // hiển thị kết quả test (thành công - thất bại)
   expect(linkElement).toBeInTheDocument();
-
   // throw new Error("test failed")
+
+  const termsAndConditions = screen.getByText(/terms and condition/i);
+  userEvent.hover(termsAndConditions);
+  // const popover = screen.getByText(/no ice cream will actually be delivered/i);
+  // expect(popover).toBeInTheDocument();
+  // userEvent.unhover(termsAndConditions);
+  // await waitForElementToBeRemoved(() =>
+  //   screen.queryByText(/no ice cream will actually be delivered/i)
+  // );
 });
 test("button has correct initial color", () => {
   render(<App />);
@@ -20,16 +44,18 @@ test("button has correct initial color", () => {
   expect(colorButton).toHaveStyle({ backgroundColor: "red" });
   // khi click btn
   fireEvent.click(colorButton);
-  // thì màu của btn sẽ đổi thành "blue"
+  // thì màu background của btn sẽ đổi thành "blue"
   expect(colorButton).toHaveStyle({ backgroundColor: "blue" });
   // và cái text của btn sẽ đổi thành "Change to red"
   expect(colorButton.textContent).toBe("Change to red");
+  // hoặc dòng trên thay thế = dòng này
+  // expect(colorButton).toHaveTextContent("Change to red");
 });
 test("initial conditions", () => {
   render(<App />);
   // có nhiều hơn 1 btn có text là: "Change to blue"
   const colorButton = screen.getByRole("button", { name: "Change to blue" });
-  // btn này không bị disable (đang hoạt động)
+  // btn này không bị disable -> nghĩa là đang enable (đang hoạt động)
   expect(colorButton).toBeEnabled();
   // có nhiều hơn 1 checkbox
   const checkbox = screen.getByRole("checkbox");
@@ -38,8 +64,10 @@ test("initial conditions", () => {
 });
 test("checkbox disable button on first click and enable on second click", () => {
   render(<App />);
-  const checkbox = screen.getByRole("checkbox", {name: `Disable button "Change to blue"`});
-  const button = screen.getByRole("button", {name: "Change to blue"});
+  const checkbox = screen.getByRole("checkbox", {
+    name: `Disable button "Change to blue"`,
+  });
+  const button = screen.getByRole("button", { name: "Change to blue" });
   // khi click vào checkbox lần đầu tiên
   fireEvent.click(checkbox);
   // thì cái btn này sẽ bị disable
@@ -50,15 +78,17 @@ test("checkbox disable button on first click and enable on second click", () => 
   expect(button).toBeEnabled();
 });
 test("Clicked disabled button has gray background and reverts to blue", () => {
-  render(<App/>);
-  const checkbox = screen.getByRole("checkbox", {name: `Disable button "Change to blue"`});
-  const button = screen.getByRole("button", {name: "Change to blue"})
+  render(<App />);
+  const checkbox = screen.getByRole("checkbox", {
+    name: `Disable button "Change to blue"`,
+  });
+  const button = screen.getByRole("button", { name: "Change to blue" });
   fireEvent.click(button);
-  fireEvent.click(checkbox)
+  fireEvent.click(checkbox);
   expect(button).toHaveStyle("background-color:gray");
-  fireEvent.click(checkbox)
+  fireEvent.click(checkbox);
   expect(button).toHaveStyle("background-color:blue");
-})
+});
 describe("spaces before camel-case capital letters", () => {
   test("Works for no inner capital letters", () => {
     // tobe -> đổi thành
@@ -72,4 +102,4 @@ describe("spaces before camel-case capital letters", () => {
     // tobe -> đổi thành
     expect(replaceCamelWithSpaces("MediumVioletRed")).toBe("Medium Violet Red");
   });
-})
+});
