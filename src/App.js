@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { Popover } from "antd";
+import Congats from "./components/congats";
 export function replaceCamelWithSpaces(colorName) {
   return colorName.replace(/\B([A-Z])\B/g, " $1");
 }
@@ -10,6 +11,7 @@ const content = (
   </div>
 );
 function App() {
+  const [count, setCount] = useState(0);
   const [backgroundBtn, setBackgroundBtn] = useState("red");
   const [disableBtn, setDisableBtn] = useState(false);
   const handleChangeColor = () => {
@@ -32,6 +34,18 @@ function App() {
 
   return (
     <div className="App">
+      <div data-test="component-app" className="App">
+        <h1 data-test="counter-display">
+          The counter is currently&nbsp;
+          <span data-test="count">{count}</span>
+        </h1>
+        <button
+          data-test="increment-button"
+          onClick={() => setCount(count + 1)}
+        >
+          Increment counter
+        </button>
+      </div>
       {/* <div>Test1</div> */}
       <a
         className="App-link"
@@ -59,6 +73,7 @@ function App() {
         type="checkbox"
       />
       <label htmlFor="disable-button-checkbox">{`Disable button "Change to blue"`}</label>
+      <Congats />
     </div>
   );
 }

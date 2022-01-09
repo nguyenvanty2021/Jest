@@ -4,9 +4,45 @@ import {
   fireEvent,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
+import Enzyme, { shallow } from "enzyme";
+import EnzymeAdapter from "@wojtekmaj/enzyme-adapter-react-17";
 import userEvent from "@testing-library/user-event";
 import App, { replaceCamelWithSpaces } from "./App";
 
+Enzyme.configure({ adapter: new EnzymeAdapter() });
+const wrapper = shallow(<App />);
+const findByTestAttr = (data, val) => {
+  return data.find(`[data-test='${val}']`);
+};
+test("renders without error", async () => {
+  // tìm trong component App có data-test nào = component-app hay không
+  // const appComponent = wrapper.find("[data-test='component-app']");
+  const appComponent = findByTestAttr(wrapper, "component-app");
+  // với mong đợi độ dài của nó = 1
+  expect(appComponent.length).toBe(1);
+});
+test("renders without error", async () => {
+  // tìm trong component App có data-test nào = increment-button hay không
+  // const appComponent = wrapper.find("[data-test='increment-button']");
+  const button = findByTestAttr(wrapper, "increment-button");
+  // với mong đợi độ dài của nó = 1
+  expect(button.length).toBe(1);
+});
+test("renders without error", async () => {
+  // tìm trong component App có data-test nào = count hay không
+  const count = findByTestAttr(wrapper, "count").text();
+  // có giá trị là 0
+  expect(count).toBe("0");
+});
+test("click count", async () => {
+  // find the button
+  const button = findByTestAttr(wrapper, "increment-button");
+  // click the button
+  button.simulate("click");
+  // find the display, and test that the number has been incremented
+  const count = findByTestAttr(wrapper, "count").text();
+  expect(count).toBe("1");
+});
 test("renders learn react link", async () => {
   render(<App />);
   // trong component App có tồn tại text "learn react" hay không
