@@ -8,12 +8,18 @@ import Enzyme, { shallow } from "enzyme";
 import EnzymeAdapter from "@wojtekmaj/enzyme-adapter-react-17";
 import userEvent from "@testing-library/user-event";
 import App, { replaceCamelWithSpaces } from "./App";
+import { findByTestAttr } from "../test/testUtil";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 const wrapper = shallow(<App />);
-const findByTestAttr = (data, val) => {
-  return data.find(`[data-test='${val}']`);
-};
+test("renders without crashing", () => {
+  // wrapper nào lỗi thì dùng lệnh này để debug
+  console.log(wrapper.debug());
+});
+test("renders non-empty component without crashing", () => {
+  // === true là check xem component có tồn tại, === false là check xem component không tồn tại
+  expect(wrapper.exists()).toBe(true);
+});
 test("renders without error", async () => {
   // tìm trong component App có data-test nào = component-app hay không
   // const appComponent = wrapper.find("[data-test='component-app']");
@@ -28,13 +34,13 @@ test("renders without error", async () => {
   // với mong đợi độ dài của nó = 1
   expect(button.length).toBe(1);
 });
-test("renders without error", async () => {
+test("counter starts at 0", async () => {
   // tìm trong component App có data-test nào = count hay không
   const count = findByTestAttr(wrapper, "count").text();
   // có giá trị là 0
   expect(count).toBe("0");
 });
-test("click count", async () => {
+test("clicking on button increments counter display", async () => {
   // find the button
   const button = findByTestAttr(wrapper, "increment-button");
   // click the button

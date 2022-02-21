@@ -2,6 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import { Popover } from "antd";
 import Congats from "./components/congats";
+import GuessComponent from "./components/guess";
 export function replaceCamelWithSpaces(colorName) {
   return colorName.replace(/\B([A-Z])\B/g, " $1");
 }
@@ -74,6 +75,7 @@ function App() {
       />
       <label htmlFor="disable-button-checkbox">{`Disable button "Change to blue"`}</label>
       <Congats />
+      <GuessComponent />
     </div>
   );
 }
