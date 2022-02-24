@@ -12,6 +12,10 @@ import { findByTestAttr } from "../test/testUtil";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 const wrapper = shallow(<App />);
+test("renders without error", () => {
+  const appComponent = findByTestAttr(wrapper, "component-app");
+  expect(appComponent).toHaveLength(1);
+});
 test("renders without crashing", () => {
   // wrapper nào lỗi thì dùng lệnh này để debug
   console.log(wrapper.debug());

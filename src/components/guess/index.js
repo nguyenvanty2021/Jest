@@ -11,22 +11,22 @@ const GuessComponent = (props) => {
       props.guessedWords.length > 0 &&
       props.guessedWords.map((word, index) => {
         return (
-          <tr data-test="guessed-word" key={index}>
-            <td>{word?.guessedWord || ""}</td>
-            <td>{word?.letterMatchCount || ""}</td>
-          </tr>
+          <div data-test="guessed-word" key={index}>
+            <div>{word?.guessedWord || ""}</div>
+            <div>{word?.letterMatchCount || ""}</div>
+          </div>
         );
       });
     contents = (
       <div data-test="guessed-words">
         <h3>Guessed Words</h3>
         <table>
-          <thread>
+          {/* <thread>
             <tr>
               <th>Guess</th>
               <th>Matching Letters</th>
-            </tr>
-          </thread>
+            </tr> */}
+          {/* </thread> */}
           <tbody>{guessedWordsRows}</tbody>
         </table>
       </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Popover } from "antd";
 import Congats from "./components/congats";
 import GuessComponent from "./components/guess";
+import InputComponent from "./components/input";
 export function replaceCamelWithSpaces(colorName) {
   return colorName.replace(/\B([A-Z])\B/g, " $1");
 }
@@ -12,6 +13,9 @@ const content = (
   </div>
 );
 function App() {
+  const success = false;
+  const secretWord = "party";
+  const guessedWords = [];
   const [count, setCount] = useState(0);
   const [backgroundBtn, setBackgroundBtn] = useState("red");
   const [disableBtn, setDisableBtn] = useState(false);
@@ -36,6 +40,7 @@ function App() {
   return (
     <div className="App">
       <div data-test="component-app" className="App">
+        <InputComponent success={success} secretWord={secretWord} />
         <h1 data-test="counter-display">
           The counter is currently&nbsp;
           <span data-test="count">{count}</span>
@@ -76,6 +81,7 @@ function App() {
       <label htmlFor="disable-button-checkbox">{`Disable button "Change to blue"`}</label>
       <Congats />
       <GuessComponent />
+      <InputComponent />
     </div>
   );
 }
