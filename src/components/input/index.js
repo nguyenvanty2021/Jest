@@ -7,7 +7,7 @@ const InputComponent = ({ success, secretWord }) => {
   } else {
     return (
       <div data-test="component-input">
-        <form className="form-inline">
+        <form data-test="form-inline" className="form-inline">
           <input
             data-test="input-box"
             type="text"
