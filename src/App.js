@@ -12,19 +12,32 @@ const content = (
     <div>no ice cream will actually be delivered</div>
   </div>
 );
+export const TempComponent = () => {
+  return <div className="componentChild"></div>;
+};
 function App() {
   const success = false;
   const secretWord = "party";
   const guessedWords = [];
+  const [object, setObject] = useState({
+    name: "ty",
+    id: 1,
+  });
   const [count, setCount] = useState(0);
   const [backgroundBtn, setBackgroundBtn] = useState("red");
   const [disableBtn, setDisableBtn] = useState(false);
+  const [gender, setGender] = useState("male");
   const handleChangeColor = () => {
     if (backgroundBtn === "red") {
       setBackgroundBtn("blue");
     } else {
       setBackgroundBtn("red");
     }
+  };
+  const checkboxChecked = () => {
+    return {
+      id: 3,
+    };
   };
   const handleCheckbox = (e) => {
     const { checked } = e.target;
@@ -36,9 +49,36 @@ function App() {
       setBackgroundBtn("blue");
     }
   };
-
+  const handleClick = (e) => {
+    // không có promise
+    // setGender(e.target.getAttribute("data-gender"));
+    // có promise
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        setGender(e.target.getAttribute("data-gender"));
+        resolve();
+      }, 1000);
+    });
+  };
   return (
     <div className="App">
+      <div className="click-1"></div>
+      <div className={`click-${count}`}></div>
+      <button className="buttonClick" onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+      <p className="pCount">{count}</p>
+      <TempComponent />
+      <div className="homecls">Welcome to home page</div>
+      <div className="homecls2">Welcome to home page2</div>
+      <div key="react" className="liCls"></div>
+      <div key="angular" className="liCls"></div>
+      <div key="vuejs" className="liCls"></div>
+      <div className="class1 class2"></div>
+      <div className="numbers">
+        <span>123</span>
+        <p>456</p>
+      </div>
       <div data-test="component-app" className="App">
         <InputComponent success={success} secretWord={secretWord} />
         <h1 data-test="counter-display">
@@ -82,6 +122,13 @@ function App() {
       <Congats />
       <GuessComponent />
       <InputComponent />
+      <button data-gender="male" onClick={handleClick}>
+        male
+      </button>
+      <button data-gender="female" onClick={handleClick}>
+        female
+      </button>
+      <div className={`box ${gender}`}>select {gender}</div>
     </div>
   );
 }
