@@ -102,7 +102,6 @@ function App() {
         Learn React
       </a>
       <Popover content={content}>
-        {" "}
         <div>terms and condition</div>
       </Popover>
       <button
@@ -129,6 +128,14 @@ function App() {
         female
       </button>
       <div className={`box ${gender}`}>select {gender}</div>
+      <img
+        src="https://img.vn/uploads/thuvien/singa-png-20220719150401Tdj1WAJFQr.png"
+        alt="Chocolate scoop"
+      />
+      <img
+        src="https://img.vn/uploads/thuvien/singa-png-20220719150401Tdj1WAJFQr.png"
+        alt="Vanilla scoop"
+      />
     </div>
   );
 }

@@ -53,12 +53,18 @@ test("clicking on button increments counter display", async () => {
   const count = findByTestAttr(wrapper, "count").text();
   expect(count).toBe("1");
 });
+// Đã xem
 test("renders learn react link", async () => {
   render(<App />);
-  // trong component App có tồn tại text "learn react" hay không
+  // trong component App có tồn tại text "Test1" hay không
   // const linkElementText = screen.getByText("Test1");
   // toBeInTheDocument là tồn tại
   // expect(linkElementText).toBeInTheDocument();
+  // kiểm tra các thẻ link (a) có text nào tên là "learn react" hay không
+  const linkElement = screen.getByRole("link", { name: /learn react/i });
+  // hiển thị kết quả test (thành công - thất bại)
+  expect(linkElement).toBeInTheDocument();
+  // throw new Error("test failed")
   // cách khác vs 2 dòng ở trên
   const valuelinkElementText = screen.queryByText(/Test1/i);
   // toBenull là không tồn tại
@@ -66,22 +72,16 @@ test("renders learn react link", async () => {
   // hoặc
   // not.toBeInTheDocument() là không tồn tại
   //expect(valuelinkElementText).not.toBeInTheDocument();
-
-  // kiểm tra các thẻ link (a) có text nào tên là "learn react" hay không
-  const linkElement = screen.getByRole("link", { name: /learn react/i });
-  // hiển thị kết quả test (thành công - thất bại)
-  expect(linkElement).toBeInTheDocument();
-  // throw new Error("test failed")
-
+  // hover
   const termsAndConditions = screen.getByText(/terms and condition/i);
   userEvent.hover(termsAndConditions);
-  // const popover = screen.getByText(/no ice cream will actually be delivered/i);
-  // expect(popover).toBeInTheDocument();
   // userEvent.unhover(termsAndConditions);
   // await waitForElementToBeRemoved(() =>
   //   screen.queryByText(/no ice cream will actually be delivered/i)
   // );
 });
+// ------------------------------------------------------
+// Đã xem
 test("button has correct initial color", () => {
   render(<App />);
   // btn này có text ban đầu là "Change to blue"
@@ -97,6 +97,8 @@ test("button has correct initial color", () => {
   // hoặc dòng trên thay thế = dòng này
   // expect(colorButton).toHaveTextContent("Change to red");
 });
+// ------------------------------------------------------
+// Đã xem
 test("initial conditions", () => {
   render(<App />);
   // có nhiều hơn 1 btn có text là: "Change to blue"
@@ -108,6 +110,8 @@ test("initial conditions", () => {
   // checkbox này chưa được check (tích chọn)
   expect(checkbox).not.toBeChecked();
 });
+// ------------------------------------------------------
+// Đã xem
 test("checkbox disable button on first click and enable on second click", () => {
   render(<App />);
   const checkbox = screen.getByRole("checkbox", {
@@ -123,6 +127,7 @@ test("checkbox disable button on first click and enable on second click", () => 
   // thì cái btn này sẽ enable trở lại
   expect(button).toBeEnabled();
 });
+// ------------------------------------------------------
 test("Clicked disabled button has gray background and reverts to blue", () => {
   render(<App />);
   const checkbox = screen.getByRole("checkbox", {
@@ -135,6 +140,8 @@ test("Clicked disabled button has gray background and reverts to blue", () => {
   fireEvent.click(checkbox);
   expect(button).toHaveStyle("background-color:blue");
 });
+// test func
+// Đã xem
 describe("spaces before camel-case capital letters", () => {
   test("Works for no inner capital letters", () => {
     // tobe -> đổi thành
@@ -148,4 +155,19 @@ describe("spaces before camel-case capital letters", () => {
     // tobe -> đổi thành
     expect(replaceCamelWithSpaces("MediumVioletRed")).toBe("Medium Violet Red");
   });
+});
+// ------------------------------------------------------
+// Đã xem
+test("displays image", async () => {
+  render(<App />);
+  // có 2 img có alt chứa text là: 'scoop'
+  // nếu call api để get data chứa img thì phải dùng async-await và thay getAllByRole = findAllByRole
+  const scoopImages = await screen.findAllByRole("img", {
+    name: /scoop$/i,
+  });
+  expect(scoopImages).toHaveLength(2);
+  // confirm alt text of images
+  // Lấy ra list alt img chứa các text này
+  const altText = scoopImages.map((element) => element.alt);
+  expect(altText).toEqual(["Chocolate scoop", "Vanilla scoop"]);
 });
