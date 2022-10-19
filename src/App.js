@@ -4,6 +4,7 @@ import { Popover } from "antd";
 import Congats from "./components/congats";
 import GuessComponent from "./components/guess";
 import InputComponent from "./components/input";
+import { getLetterMatchCount } from "./helpers";
 export function replaceCamelWithSpaces(colorName) {
   return colorName.replace(/\B([A-Z])\B/g, " $1");
 }
@@ -62,6 +63,7 @@ function App() {
   };
   return (
     <div className="App">
+      {getLetterMatchCount("bones", "party")}
       <div className="click-1"></div>
       <div className={`click-${count}`}></div>
       <button className="buttonClick" onClick={() => setCount(count + 1)}>

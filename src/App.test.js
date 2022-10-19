@@ -12,25 +12,34 @@ import { findByTestAttr } from "../test/testUtil";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 const wrapper = shallow(<App />);
+// Đã xem
 test("renders without error", () => {
   const appComponent = findByTestAttr(wrapper, "component-app");
   expect(appComponent).toHaveLength(1);
 });
+// ------------------------------------------------------
+// Đã xem
 test("renders without crashing", () => {
   // wrapper nào lỗi thì dùng lệnh này để debug
   console.log(wrapper.debug());
 });
+// ------------------------------------------------------
+// Đã xem
 test("renders non-empty component without crashing", () => {
   // === true là check xem component có tồn tại, === false là check xem component không tồn tại
   expect(wrapper.exists()).toBe(true);
 });
+// ------------------------------------------------------
+// Đã xem
 test("renders without error", async () => {
   // tìm trong component App có data-test nào = component-app hay không
-  // const appComponent = wrapper.find("[data-test='component-app']");
-  const appComponent = findByTestAttr(wrapper, "component-app");
-  // với mong đợi độ dài của nó = 1
+  const appComponent = wrapper.find("[data-test='component-app']");
+  // const appComponent = findByTestAttr(wrapper, "component-app");
+  // với mong đợi độ dài của nó = 1 (tồn tại ít nhất 1 element có data-test = component-app)
   expect(appComponent.length).toBe(1);
 });
+// ------------------------------------------------------
+// Đã xem
 test("renders without error", async () => {
   // tìm trong component App có data-test nào = increment-button hay không
   // const appComponent = wrapper.find("[data-test='increment-button']");
@@ -38,12 +47,16 @@ test("renders without error", async () => {
   // với mong đợi độ dài của nó = 1
   expect(button.length).toBe(1);
 });
+// ------------------------------------------------------
+// Đã xem
 test("counter starts at 0", async () => {
   // tìm trong component App có data-test nào = count hay không
   const count = findByTestAttr(wrapper, "count").text();
   // có giá trị là 0
   expect(count).toBe("0");
 });
+// ------------------------------------------------------
+// Đã xem
 test("clicking on button increments counter display", async () => {
   // find the button
   const button = findByTestAttr(wrapper, "increment-button");
@@ -53,6 +66,7 @@ test("clicking on button increments counter display", async () => {
   const count = findByTestAttr(wrapper, "count").text();
   expect(count).toBe("1");
 });
+// ------------------------------------------------------
 // Đã xem
 test("renders learn react link", async () => {
   render(<App />);
