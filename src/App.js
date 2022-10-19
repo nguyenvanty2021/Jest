@@ -121,7 +121,7 @@ function App() {
       />
       <label htmlFor="disable-button-checkbox">{`Disable button "Change to blue"`}</label>
       <Congats />
-      <GuessComponent />
+      <GuessComponent guessedWords={guessedWords} />
       <InputComponent />
       <button data-gender="male" onClick={handleClick}>
         male
